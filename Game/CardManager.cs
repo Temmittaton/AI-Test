@@ -19,9 +19,9 @@ public class CardManager : MonoBehaviour{
             for (int h = 0; h < height; h++){
                 for (int l = 0; l < length; l++){
                     GameObject _card = Object.Instantiate(cardPrefab);
-                    int _value = boards[b].card[l, h].value;
+                    int _value = boards[b].card[l, h];
 
-                    _card.transform.position = new Vector3(5 * b + l, -h, 0);
+                    _card.transform.position = new Vector3((batchSize + 8) * b + l, -h, 0);
                     _card.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
 
                     if (_value == 1){_card.GetComponent<SpriteRenderer>().color = Color.white;}
@@ -37,7 +37,7 @@ public class CardManager : MonoBehaviour{
 
         for (int i = 0; i < batchSize; i++){
             GameObject _card = Object.Instantiate(cardPrefab);
-            _card.transform.position = new Vector3(i * (length + 1), 2, 0);
+            _card.transform.position = new Vector3(i * (length + 2), 2, 0);
             visualizer[i] = _card;
         }
     }
@@ -53,24 +53,24 @@ public class CardManager : MonoBehaviour{
             visualizer[NN].GetComponent<SpriteRenderer>().color = Color.red;
             return "OutOfRange";
         }
-        else if (board.card[x, y].value != 1){
+        else if (board.card[x, y] != 1){
             //Debug.Log("InvalidCard");
             visualizer[NN].GetComponent<SpriteRenderer>().color = Color.yellow;
             return "InvalidCard";
         }
         else {
-            board.card[x, y].value = 0;
+            board.card[x, y] = 0;
             if (x + 1 < length){
-                board.card[x + 1, y].value = -(board.card[x + 1, y].value);
+                board.card[x + 1, y] = -(board.card[x + 1, y]);
             }
             if (x - 1 > -1){
-                board.card[x - 1, y].value = -(board.card[x - 1, y].value);
+                board.card[x - 1, y] = -(board.card[x - 1, y]);
             }
             if (y + 1 < height){
-                board.card[x, y + 1].value = -(board.card[x, y + 1].value);
+                board.card[x, y + 1] = -(board.card[x, y + 1]);
             }
             if (y - 1 > -1){
-                board.card[x, y - 1].value = -(board.card[x, y - 1].value);
+                board.card[x, y - 1] = -(board.card[x, y - 1]);
             }
         }
         RenderBoards();
@@ -83,7 +83,7 @@ public class CardManager : MonoBehaviour{
         for (int b = 0; b < boards.Length; b++){
             for (int h = 0; h < height; h++){
                 for (int l = 0; l < length; l++){
-                    int _value = boards[b].card[l, h].value;
+                    int _value = boards[b].card[l, h];
                     GameObject _card = boards[b].cardInstances[l, h];
 
                     if (_value == 1){_card.GetComponent<SpriteRenderer>().color = Color.white;}
@@ -102,13 +102,13 @@ public class CardManager : MonoBehaviour{
     }
 
     public string GameEnd(Board board){
-        foreach(Card card in board.card){
-            if (card.value == 1){
+        foreach(int card in board.card){
+            if (card == 1){
                 return "Continue";
             }
         }
-        foreach(Card card in board.card){
-            if (card.value == -1){
+        foreach(int card in board.card){
+            if (card == -1){
                 return "Lost";
             }
         }
@@ -117,31 +117,23 @@ public class CardManager : MonoBehaviour{
 }
 
 public class Board {
-    public Card[,] card;
+    public int[,] card;
     public GameObject[,] cardInstances;
 
     public Board(int length, int height){
-        card = new Card[length, height];
+        card = new int[length, height];
         cardInstances = new GameObject[length, height];
 
         for (int l = 0; l < length; l++){
             for (int h = 0; h < height; h++){
                 int  _value;
-                float _rand = 1/*(UnityEngine.Random.Range(-1f, 1f))*/;
+                float _rand = (UnityEngine.Random.Range(-1f, 1f));
 
-                _value = (int)Mathf.Round(_rand);
+                _value = Mathf.RoundToInt(_rand);
                 if (_value == 0){_value = 1;}
 
-                card[l, h] = new Card(_value);
+                card[l, h] = _value;
             }
         }
-    }
-}
-
-public class Card {
-    public int value;
-
-    public Card(int givenValue){
-        value = givenValue;
     }
 }

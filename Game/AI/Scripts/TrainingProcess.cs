@@ -50,8 +50,8 @@ public class TrainingProcess : MonoBehaviour {
             int cardIndex = 0;
             float[] NNinputs = new float[neuralNetworks[n].layer[0].node.Length];
 
-            foreach(Card card in cardManager.boards[n].card){
-                NNinputs[cardIndex] = card.value;
+            foreach(int card in cardManager.boards[n].card){
+                NNinputs[cardIndex] = card;
             }
 
             neuralNetworks[n].SetInputs(NNinputs);

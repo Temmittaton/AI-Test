@@ -8,7 +8,7 @@ public class Tester : MonoBehaviour{
     private int[] GetOptiCard(){
         int x = 0;
         int y = 0;
-        while (cM.boards[0].card[x, y].value != 1){
+        while (cM.boards[0].card[x, y] != 1){
             if (x < cM.length){
                 x++;
             }
