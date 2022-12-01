@@ -75,8 +75,8 @@ public class TrainingProcess : MonoBehaviour {
 
     public int[] GetBest(){
         int[] bests = new int[2];
-        bests[0] = 999;
-        bests[1] = 999;
+        bests[0] = 99999;
+        bests[1] = 99999;
 
         for (int n = 0; n < cost.Length; n++){
             if (cost[n] < bests[1]){

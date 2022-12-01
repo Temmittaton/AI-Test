@@ -9,7 +9,7 @@ public class AIManagement : MonoBehaviour {
     public int batchSize, inputNodes, midLayers, midLayersNodes, outputNodes;
     public int iteration, iterationNumber;
     public bool renderBoards, renderNNS;
-    private bool continueButtonClicked, check, end, timer;
+    private bool end;
     public float timeInterval;
     
     public void TrainingInit(){
@@ -33,20 +33,7 @@ public class AIManagement : MonoBehaviour {
         cM.BoardsDestroy();
     }
 
-    public void Continue(){
-        continueButtonClicked = true;
-    }
-
-    IEnumerator WaitTimer(){
-        timer = false;
-        yield return new WaitForSeconds(timeInterval);
-        timer = true;
-    }
-
     public void LoopStart(){
-        check = true;
-        timer= true;
-        iteration = 0;
         TrainingInit();
         iteration = 0;
         for (int i = 0; i < batchSize; i++){
@@ -96,23 +83,13 @@ public class AIManagement : MonoBehaviour {
             }
         }
 
-        if (timer){
-            if ((iteration < iterationNumber) && (!end)){
-                iteration++;
-                Loop();
-            }
-            else if (continueButtonClicked){
-                continueButtonClicked = false;
-                check = true;
-                LoopEnd();
-                Debug.Log("Continuing");
-                LoopStart();
-            }
-            else if (check) {
-                check = false;
-                Debug.Log("Ended");
-            }
-            StartCoroutine(WaitTimer());
+        if ((!end) && (iteration < iterationNumber)){
+            Loop();
+            iteration++;
+        }
+        else {
+            LoopEnd();
+            LoopStart();
         }
     }
 }
