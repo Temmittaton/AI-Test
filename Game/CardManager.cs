@@ -15,7 +15,6 @@ public class CardManager : MonoBehaviour{
 
         BoardsDestroy();
         for (int b = 0; b < boards.Length; b++){
-            //Debug.Log("Board n° " + Convert.ToString(b));
             for (int h = 0; h < height; h++){
                 for (int l = 0; l < length; l++){
                     GameObject _card = Object.Instantiate(cardPrefab);
@@ -46,15 +45,11 @@ public class CardManager : MonoBehaviour{
         int x = inputs[0];
         int y = inputs[1];
 
-        //Debug.Log("x = " + Convert.ToString(x) + " , y = " + Convert.ToString(y));
-
         if ((x >= length) || (y >= height) || (y < 0) || (x < 0)){
-            //Debug.Log("OutOfRange");
             visualizer[NN].GetComponent<SpriteRenderer>().color = Color.red;
             return "OutOfRange";
         }
         else if (board.card[x, y] != 1){
-            //Debug.Log("InvalidCard");
             visualizer[NN].GetComponent<SpriteRenderer>().color = Color.yellow;
             return "InvalidCard";
         }
@@ -74,7 +69,6 @@ public class CardManager : MonoBehaviour{
             }
         }
         RenderBoards();
-        //Debug.Log("Done");
         visualizer[NN].GetComponent<SpriteRenderer>().color = Color.green;
         return "Done";
     }

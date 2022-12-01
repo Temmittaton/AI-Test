@@ -7,15 +7,12 @@ public class NeuralNetwork {
 
         for (int i = 0; i < layer.Length; i++){
             if (i == 0){
-                //Debug.Log("Input layer 0 created.");
                 layer[i] = new Layer(inputNodes, 0);
             }
             else if (i == layer.Length - 1){
-                //Debug.Log("Output layer " + System.Convert.ToString(i) + " created.");
                 layer[i] = new Layer(outputNodes, (inputNodes * midLayersNodes) + midLayersNodes);
             }
             else {
-                //Debug.Log("Mid layer : " + System.Convert.ToString(i) + "created.");
                 layer[i] = new Layer(midLayersNodes, (layer[i - 1].node.Length - 1) * midLayersNodes + midLayersNodes);
             }
         }
@@ -23,7 +20,6 @@ public class NeuralNetwork {
 
     public void RunThrought(){
         for (int l = 1; l < layer.Length; l++){
-            //Debug.Log("Beginning runthrought for layer N° : " + Convert.ToString(l));
 
             for (int n = 0; n < layer[l].node.Length; n++){
 
@@ -32,13 +28,9 @@ public class NeuralNetwork {
                     float currentNode = layer[l - 1].node[pn];
                     int currentWeightID = (n + pn * (layer[l].node.Length));
 
-                    /*Debug.Log("PN = " + Convert.ToString(pn));
-                    Debug.Log("Weight n ° : " + Convert.ToString(currentWeightID));
-                    Debug.Log("Weight length = "  + Convert.ToString(layer[l].weight.Length));*/
                     float currentWeight = layer[l].weight[currentWeightID];
 
                     layer[l].node[n] += (currentNode * currentWeight);
-                    //Debug.Log("Value : " + Convert.ToString(currentNode * currentWeight));
                 }
             layer[l].node[n] += layer[l].bias[n];
             }
@@ -65,7 +57,6 @@ public class NeuralNetwork {
 
     public void SetInputs(float[] inputs){
         for (int i = 0; i < inputs.Length; i++){
-            //Debug.Log("Input n ° " + Convert.ToString(i) + " = " + Convert.ToString(inputs[i]));
             layer[0].node[i] = inputs[i];
         }
     }

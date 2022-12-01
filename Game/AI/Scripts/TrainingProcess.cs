@@ -36,8 +36,6 @@ public class TrainingProcess : MonoBehaviour {
                         }
                     }
                 }
-                //Debug.Log("Layer " + System.Convert.ToString(l) + " initialized.");
-            //Debug.Log("NN " + System.Convert.ToString(i) + " initialized.");
             }
         }
     }

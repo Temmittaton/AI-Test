@@ -6,8 +6,7 @@ public class AIManagement : MonoBehaviour {
     private SaveSystem save;
     public CardManager cM;
     public TrainingProcess tP;
-    public int batchSize, inputNodes, midLayers, midLayersNodes, outputNodes;
-    public int iteration, iterationNumber;
+    public int batchSize, inputNodes, midLayers, midLayersNodes, outputNodes, iteration, iterationNumber;
     public bool renderBoards, renderNNS;
     private bool end;
     public float timeInterval;
